@@ -1,5 +1,17 @@
 import os
 
+#######################
+####### PATHS #########
+#######################
+forgepath = "ideas/forge"
+blueprintspath = "ideas/blueprints"
+vaultpath = "ideas/vault"
+
+########################
+#### MAIN FUNCTION #####
+########################
+
+
 def main():
     print("Loom Activated")
 
@@ -10,6 +22,7 @@ def main():
         forge : Forge an item
         vault : Access the vault
         smith : Visit the smith
+        blueprints : Create a new blueprint
         """
     
     while True:
@@ -45,8 +58,10 @@ def main():
 def forge():
     print("Forge")
     forge_help_msg = """
-    Forge Help:
-        This command allows you to forge new items.
+    Forge 
+      Help: This command allows you to forge new items.
+      New: To forge a new item, use the command 'new <item-name>'. This will create a new folder in the forge directory with the specified item name and a README.md file inside it.
+      exit: To exit the forge, type 'exit'.
     """
     while True:
         forge_command = input("loom/forge>> ").strip()
@@ -62,15 +77,28 @@ def forge():
             folname = forge_command.removeprefix("new ")
             new(folname, "forge")
 
+        elif forge_command.lower() == "list":
+            lst(forgepath)
+        
+        elif forge_command.lower().startswith("list "):
+            subpath = forge_command.removeprefix("list ")
+            lst(f"{forgepath}/{subpath}")
+
         else:
             print("Unknown command. Type 'help' for a list of commands.")
+
+
+
+
 
 
 def blueprints():
     print("Blueprint")
     blueprint_help_msg = """
-    Blueprint Help:
-        This command allows you to create new blueprints.
+    Blueprint 
+      Help: This command allows you to create new blueprints.
+      New: To create a new blueprint, use the command 'new <blueprint-name>'. This will create a new markdown file in the blueprints directory with the specified name.
+      exit: To exit the blueprints interface, type 'exit'.
     """
 
     while True:
@@ -86,9 +114,17 @@ def blueprints():
         elif blueprint_command.lower().startswith("new "):
             fname = blueprint_command.removeprefix("new ")
             new(fname, "blueprint")
+        
+        elif blueprint_command.lower() == "list":
+            lst(blueprintspath)
 
         else:
             print("Unknown command. Type 'help' for a list of commands.")
+
+
+
+
+
 
 def vault():
     print("Vault")
@@ -109,6 +145,10 @@ def vault():
 
         else:
             print("Unknown command. Type 'help' for a list of commands.")
+
+
+
+
 
 
 def smith():
@@ -137,29 +177,38 @@ def smith():
 
 def new(s:str, command:str):
     # eliminating spaces and replacing with "-"
-    try:
-        s =  s.replace(" ", "-")
-    except Exception as e:
-        pass
+    if " " in s:
+        s = s.replace(" ", "-")
 
     
     if command == "forge":
         try:
-            os.makedirs(f"ideas/forge/{s}")
-            open (f"ideas/forge/{s}/README.md", "w").close()
+            os.makedirs(f"{forgepath}/{s}")
+            open (f"{forgepath}/{s}/README.md", "w").close()
             print(f"{s} folder created in forge with README.md")
         except Exception as e:
             print(f"{e}")
 
     elif command == "blueprint":
-        if not os.path.exists(f"ideas/blueprints/{s}.md"):
-            open (f"ideas/blueprints/{s}.md", "w").close()
+        if not os.path.exists(f"{blueprintspath}/{s}.md"):
+            open (f"{blueprintspath}/{s}.md", "w").close()
             print(f"{s}.md created in blueprints.")
         else:
             print(f"{s}.md already exists in blueprints.")
 
     
-
+def lst(path:str):
+    try:
+        items = os.listdir(f"{path}")
+        items = [item for item in items if not item.startswith(".")]  # Exclude hidden files
+        if items:
+            print(f"Items in {path}: ")
+            for item in items:
+                print(f"  - {item}")
+        else:
+            print(f"No items found in {path}.")
+    except Exception as e:
+        print(f"{e}")
 
 
 ##########################
