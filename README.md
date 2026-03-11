@@ -165,5 +165,4 @@ The terminal-first design keeps the system minimal and focused on thinking and i
 
 # License
 
-No license currently specified.
-Add a license if you plan to distribute or open-source the project.
+license specified.
