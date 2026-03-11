@@ -1,11 +1,16 @@
 import os
+import sys
+from prompt_toolkit import PromptSession
+
 
 #######################
-####### PATHS #########
+## PATHS & CONSTANTS ##
 #######################
 forgepath = "ideas/forge"
 blueprintspath = "ideas/blueprints"
 vaultpath = "ideas/vault"
+ses = PromptSession()
+
 
 ########################
 #### MAIN FUNCTION #####
@@ -26,27 +31,26 @@ def main():
         """
     
     while True:
-        command = input("loom>> ").lower()
-    
-        if command == "exit":
-            print("Loom Exiting")
+        try:
+            command = ses.prompt("loom>> ").lower().strip()
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
             break
-    
-        elif command == "help":
-            print(loom_help_msg)
-        
-        elif command == "forge":
-            forge()
-        
-        elif command == "blueprints":
-            blueprints()
+        except EOFError:
+            print("\nExiting")
+            break
 
-        elif command == "vault":
-            vault()
+        functions = {
+            "exit": lambda: sys.exit("Exiting Loom"),
+            "help": lambda: print(loom_help_msg),
+            "forge": forge,
+            "blueprints": blueprints,
+            "vault": vault,
+            "smith": smith
+        }
 
-        elif command == "smith":
-            smith()
-        
+        if command in functions:
+            functions[command]()
         else:
             print("Unknown command. Type 'help' for a list of commands.")
 
@@ -64,7 +68,14 @@ def forge():
       exit: To exit the forge, type 'exit'.
     """
     while True:
-        forge_command = input("loom/forge>> ").strip()
+        try:
+            forge_command = ses.prompt("loom/forge>> ").strip()
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
+            break
+        except EOFError:
+            print("\nExiting")
+            break
 
         if forge_command.lower() == "exit":
             print("Forge Exiting")
@@ -93,20 +104,28 @@ def forge():
 
 
 def blueprints():
-    print("Blueprint")
+    print("Blueprints")
     blueprint_help_msg = """
-    Blueprint 
+    Blueprints 
       Help: This command allows you to create new blueprints.
       New: To create a new blueprint, use the command 'new <blueprint-name>'. This will create a new markdown file in the blueprints directory with the specified name.
       exit: To exit the blueprints interface, type 'exit'.
     """
 
     while True:
-        blueprint_command = input("loom/blueprint>> ").strip()
+        try:
+            blueprint_command = ses.prompt("loom/blueprints>> ").strip()
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
+            break
+        except EOFError:
+            print("\nExiting")
+            break
 
         if blueprint_command.lower() == "exit":
-            print("Blueprint Exiting")
+            print("Blueprints Exiting")
             break
+
 
         elif blueprint_command.lower() == "help":
             print(blueprint_help_msg)
@@ -134,7 +153,14 @@ def vault():
     """
 
     while True:
-        vault_command = input("loom/vault>> ").strip()
+        try:
+            vault_command = ses.prompt("loom/vault>> ").strip()
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
+            break
+        except EOFError:
+            print("\nExiting")
+            break
 
         if vault_command.lower() == "exit":
             print("Vault Exiting")
@@ -159,7 +185,14 @@ def smith():
     """
 
     while True:
-        smith_command = input("loom/smith>> ").strip()
+        try:
+            smith_command = ses.prompt("loom/smith>> ").strip()
+        except KeyboardInterrupt:
+            print("\nInterrupted by user")
+            break
+        except EOFError:
+            print("\nExiting")
+            break
 
         if smith_command.lower() == "exit":
             print("Smith Exiting")
@@ -196,6 +229,11 @@ def new(s:str, command:str):
         else:
             print(f"{s}.md already exists in blueprints.")
 
+
+
+
+
+
     
 def lst(path:str):
     try:
@@ -215,4 +253,5 @@ def lst(path:str):
 ####### FILE END #########
 ##########################
 
-if __name__ == "__main__":    main()
+if __name__ == "__main__":
+    main()

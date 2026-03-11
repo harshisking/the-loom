@@ -1,0 +1,69 @@
+# ----------------------
+# Python cache
+# ----------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ----------------------
+# Virtual environments
+# ----------------------
+venv/
+.env/
+.envrc
+.venv/
+
+# ----------------------
+# Build / packaging
+# ----------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ----------------------
+# Logs
+# ----------------------
+*.log
+
+# ----------------------
+# Environment variables
+# ----------------------
+.env
+.env.*
+
+# ----------------------
+# OS junk
+# ----------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------
+# Editor / IDE
+# ----------------------
+.vscode/
+.idea/
+
+# ----------------------
+# Python testing / coverage
+# ----------------------
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ----------------------
+# Local config files
+# ----------------------
+config.json
+*.config
+
+# ----------------------
+# Temporary files
+# ----------------------
+*.tmp
+*.temp
+
+# ----------------------
+# Test Folders
+# ----------------------
+doesntconcernyou/
