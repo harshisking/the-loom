@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 # ----------------------
 # Python cache
 # ----------------------
+=======
+# Python cache files
+>>>>>>> dev1
 __pycache__/
 *.py[cod]
 *$py.class
 
+<<<<<<< HEAD
 # ----------------------
 # Virtual environments
 # ----------------------
@@ -67,3 +72,37 @@ config.json
 # Test Folders
 # ----------------------
 doesntconcernyou/
+=======
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE specific folders
+.idea/
+*.iml
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter notebooks checkpoints (if any)
+.ipynb_checkpoints/
+
+# Node/JS stuff if you ever add front-end
+node_modules/
+
+# Secrets
+*.env
+*.secret
+>>>>>>> dev1
