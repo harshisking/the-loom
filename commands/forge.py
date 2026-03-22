@@ -1,5 +1,5 @@
 from core.session import get
-from commands.utility import new, lst
+from commands.utility import new, lst, archive
 
 forgepath = "ideas/forge"
 
@@ -7,8 +7,7 @@ forgepath = "ideas/forge"
 def forge():
     print("Forge")
 
-    forge_help_msg = """
-    Forge 
+    forge_help_msg = """Forge 
       Help: This command allows you to forge new items.
       New: To forge a new item, use the command 'new <item-name>'.
       exit: To exit the forge, type 'exit'.
@@ -37,6 +36,12 @@ def forge():
         elif forge_command.lower().startswith("list "):
             subpath = forge_command.removeprefix("list ")
             lst(f"{forgepath}/{subpath}")
+        
+        elif forge_command.lower().startswith("archive"):
+            config = forge_command.removeprefix("archive ").split(" ")
+            name = config[0]
+            filetype = config[1] if len(config) > 1 else "zip"
+            archive(name,filetype)
 
         else:
             print("Unknown command. Type 'help' for a list of commands.")

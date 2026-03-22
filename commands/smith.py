@@ -4,9 +4,9 @@ from core.session import get
 def smith():
     print("Smith")
 
-    smith_help_msg = """
-    Smith Help:
-        This command allows you to visit the smith.
+    smith_help_msg = """Smith
+        Help: Outputs this help message.
+        exit: Exits the smith interface.
     """
 
     while True:
