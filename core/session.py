@@ -11,3 +11,15 @@ def get(prompt_text):
     except EOFError:
         print("\nExiting")
         return None
+
+def get_confirm(prompt_text):
+    while True:
+        response = get(prompt_text + " (y/n): ")
+        if response is None:
+            return False
+        if response.lower() in ['y', 'yes']:
+            return True
+        elif response.lower() in ['n', 'no']:
+            return False
+        else:
+            print("Please enter 'y' or 'n'.")

@@ -7,8 +7,7 @@ blueprintspath = "ideas/blueprints"
 def blueprints():
     print("Blueprints")
 
-    blueprint_help_msg = """
-    Blueprints 
+    blueprint_help_msg = """Blueprints 
       Help: This command allows you to create new blueprints.
       New: To create a new blueprint, use the command 'new <blueprint-name>'.
       exit: To exit the blueprints interface, type 'exit'.
