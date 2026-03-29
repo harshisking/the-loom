@@ -28,7 +28,7 @@ def blueprints():
 
         elif blueprint_command.lower().startswith("new "):
             fname = blueprint_command.removeprefix("new ")
-            new(fname, "blueprint")
+            new(fname, blueprintspath)
 
         elif blueprint_command.lower() == "list":
             lst(blueprintspath)

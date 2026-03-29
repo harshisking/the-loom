@@ -28,7 +28,7 @@ def forge():
 
         elif forge_command.lower().startswith("new "):
             folname = forge_command.removeprefix("new ")
-            new(folname, "forge")
+            new(folname, forgepath)
 
         elif forge_command.lower() == "list":
             lst(forgepath)
