@@ -57,8 +57,13 @@ def archive(name: str, filetype: str):
             print(f"{name} does not exist in forge.")
 
 def promote(name: str):
-    if not os.path.exists(f"ideas/forge/{name}") and os.path.exists(f"ideas/blueprints/{name}.md"):
-        os.makedirs(f"ideas/forge/{name}")
-        shutil.move(f"ideas/blueprints/{name}.md", f"ideas/forge/README.md")
-        print(f"{name} promoted from blueprints to forge.")
+    if not os.path.exists(f"ideas/forge/{name}"):
+        if os.path.exists(f"ideas/blueprints/{name}.md"):
+            os.makedirs(f"ideas/forge/{name}")
+            shutil.move(f"ideas/blueprints/{name}.md", f"ideas/forge/README.md")
+            print(f"{name} promoted from blueprints to forge.")
+        else:
+            print(f"{name}.md doesn't exist in blueprints. Cannot promote.")
+    else:
+        print(f"{name} already exists in forge. Cannot promote.")
         
