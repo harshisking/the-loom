@@ -1,31 +1,28 @@
 import os
 import shutil
-
 from core.session import get, get_confirm
 
-forgepath = "ideas/forge"
-blueprintspath = "ideas/blueprints"
-vaultpath = "ideas/vault"
 
-
-def new(s: str, command: str):
+def new(s: str, path: str):
     if " " in s:
         s = s.replace(" ", "-")
 
-    if command == "forge":
+    if "forge" in path:
         try:
-            os.makedirs(f"{forgepath}/{s}")
-            open(f"{forgepath}/{s}/README.md", "w").close()
-            print(f"{s} folder created in forge with README.md")
+            os.mkdir(f"{path}/{s}")
+            open(f"{path}/{s}/README.md", "w").close()
+            print(f"{s} folder created in forge with README.md.")
         except Exception as e:
             print(f"{e}")
-
-    elif command == "blueprint":
-        if not os.path.exists(f"{blueprintspath}/{s}.md"):
-            open(f"{blueprintspath}/{s}.md", "w").close()
-            print(f"{s}.md created in blueprints.")
+    else:
+        if not os.path.exists(f"{path}/{s}.md"):
+            try:
+                open(f"{path}/{s}.md", "w").close()
+                print(f"{s}.md created in Blueprints.")
+            except Exception as e:
+                print(f"{e}")
         else:
-            print(f"{s}.md already exists in blueprints.")
+            print(f"{s}.md already exists in Blueprints.")
 
 
 def lst(path: str):
@@ -44,13 +41,13 @@ def lst(path: str):
 
 
 def archive(name: str, filetype: str):
-        if os.path.exists(f"{forgepath}/{name}"):
+        if os.path.exists(f"ideas/forge/{name}"):
             try:
-                shutil.make_archive(f"{vaultpath}/{name}", f"{filetype}", f"{forgepath}/{name}")
+                shutil.make_archive(f"ideas/vault/{name}", f"{filetype}", f"ideas/forge/{name}")
                 print(f"{name} archived in vault successfully.")
 
                 if get_confirm(f"Do you want to delete the original {name} from forge? (y/N): "):
-                    shutil.rmtree(f"{forgepath}/{name}")
+                    shutil.rmtree(f"ideas/forge/{name}")
                 else:
                     print(f"{name} retained in forge.")
 
@@ -60,8 +57,8 @@ def archive(name: str, filetype: str):
             print(f"{name} does not exist in forge.")
 
 def promote(name: str):
-    if not os.path.exists(f"{forgepath}/{name}"):
-        os.makedirs(f"{forgepath}/{name}")
-        shutil.move(f"{blueprintspath}/{name}.md", f"{forgepath}/README.md")
+    if not os.path.exists(f"ideas/forge/{name}"):
+        os.makedirs(f"ideas/forge/{name}")
+        shutil.move(f"ideas/blueprints/{name}.md", f"ideas/forge/README.md")
         print(f"{name} promoted from blueprints to forge.")
         
