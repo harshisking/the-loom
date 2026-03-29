@@ -1,5 +1,5 @@
 from core.session import get, ses
-from commands.utility import new, lst
+from commands.utility import new, lst, promote
 
 blueprintspath = "ideas/blueprints"
 
@@ -32,6 +32,10 @@ def blueprints():
 
         elif blueprint_command.lower() == "list":
             lst(blueprintspath)
+
+        elif blueprint_command.lower().startswith("promote "):
+            fname = blueprint_command.removeprefix("promote ")
+            promote(fname)
 
         else:
             print("Unknown command. Type 'help' for a list of commands.")
