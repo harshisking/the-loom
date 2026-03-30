@@ -18,10 +18,7 @@ def forge():
     while True:
         forge_command = get("loom/forge>> ")
 
-        if forge_command is None:
-            break
-       
-        elif forge_command.lower() == "exit":
+        if forge_command is None or forge_command.lower() == "exit":
             print("Forge Exiting")
             break
 

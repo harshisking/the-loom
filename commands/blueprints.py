@@ -18,10 +18,7 @@ def blueprints():
     while True:
         blueprint_command = get("loom/blueprints>> ")
 
-        if blueprint_command is None:
-            break
-        
-        if blueprint_command.lower() == "exit":
+        if blueprint_command is None or blueprint_command.lower() == "exit":
             print("Blueprints Exiting")
             break
 
