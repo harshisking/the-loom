@@ -12,10 +12,7 @@ def smith():
     while True:
         smith_command = get("loom/smith>> ")
 
-        if smith_command is None:
-            break
-
-        if smith_command.lower() == "exit":
+        if smith_command is None or smith_command.lower() == "exit":
             print("Smith Exiting")
             break
 

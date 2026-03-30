@@ -15,11 +15,8 @@ def vault():
 
     while True:
         vault_command = get("loom/vault>> ")
-        
-        if vault_command is None:
-            break
 
-        if vault_command.lower() == "exit":
+        if vault_command is None or vault_command.lower() == "exit":
             print("Vault Exiting")
             break
 
