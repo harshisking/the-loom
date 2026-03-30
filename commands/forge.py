@@ -8,8 +8,10 @@ def forge():
     print("Forge")
 
     forge_help_msg = """Forge 
-      Help: This command allows you to forge new items.
-      New: To forge a new item, use the command 'new <item-name>'.
+      help: This command allows you to forge new items.
+      new: To forge a new item, use the command 'new <item-name>'.
+      list: To list all existing forge projects. Use list <project-name> to list the contents in the project.
+      archive: To archive a project in vault, use the command 'archive <project-name> [filetype]'. filetype is zip by default. 
       exit: To exit the forge, type 'exit'.
     """
 

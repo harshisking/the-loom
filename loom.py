@@ -8,10 +8,10 @@ def main():
     loom_help_msg = """Available Commands:
         help : Display this help message
         exit : exit the loom
-        forge : Forge an item
+        forge : Access the forge
         vault : Access the vault
         smith : Visit the smith
-        blueprints : Create a new blueprint
+        blueprints : Access the blueprints
         """
 
     while True:

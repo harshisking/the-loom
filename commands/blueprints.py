@@ -8,9 +8,11 @@ def blueprints():
     print("Blueprints")
 
     blueprint_help_msg = """Blueprints 
-      Help: This command allows you to create new blueprints.
-      New: To create a new blueprint, use the command 'new <blueprint-name>'.
-      exit: To exit the blueprints interface, type 'exit'.
+      Help   : This command allows you to create new blueprints.
+      New    : To create a new blueprint, use the command 'new <blueprint-name>'.
+      exit   : To exit the blueprints interface, type 'exit'.
+      promote: To promote a blueprint to a project, use the command 'promote <blueprint-name>'.
+      list   : To list all existing blueprints, use the command 'list'.
     """
 
     while True:

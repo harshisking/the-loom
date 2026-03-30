@@ -10,6 +10,7 @@ def vault():
     vault_help_msg = """Vault
         Help: This command allows you to access the vault.
         exit: Exits the vault interface.
+        list: Lists all the archived projects in the vault. 
     """
 
     while True:
