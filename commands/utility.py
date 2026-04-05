@@ -2,9 +2,10 @@ import os
 import shutil
 import logging
 from core.session import get_confirm
+from core.paths import LOG_FILE, VAULT_DIR, FORGE_DIR
 
 logging.basicConfig(
-    filename="loom.log",
+    filename=str(LOG_FILE),
     level=logging.INFO,
     format="%(asctime)s | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
@@ -12,11 +13,11 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def new(s: str, path: str):
+def new(s: str, path: str, command: str):
     if " " in s:
         s = s.replace(" ", "-")
 
-    if "forge" in path:
+    if command == "forge":
         try:
             os.mkdir(f"{path}/{s}")
             logger.info(f"Created Folder: {path}/{s}")
@@ -26,7 +27,7 @@ def new(s: str, path: str):
         except Exception as e:
             print(f"{e}")
             logger.exception(f"Fail Create: {path}/{s}/README.md")
-    else:
+    elif command == "blueprints":
         if not os.path.exists(f"{path}/{s}.md"):
             try:
                 open(f"{path}/{s}.md", "w").close()
@@ -58,38 +59,38 @@ def lst(path: str):
         logger.exception(f"Fail List: {path}")
 
 
-def archive(name: str, filetype: str):
+def archive(name: str, filetype: str, pathfrom: str):
         if os.path.exists(f"ideas/forge/{name}"):
             try:
-                shutil.make_archive(f"ideas/vault/{name}", f"{filetype}", f"ideas/forge/{name}")
-                logger.info(f"Archive Folder: ideas/forge/{name} to ideas/vault/{name}.{filetype}")
+                shutil.make_archive(f"{str(VAULT_DIR)}/{name}", f"{filetype}", f"{pathfrom}/{name}")
+                logger.info(f"Archive Folder: {pathfrom}/{name} to {str(VAULT_DIR)}/{name}.{filetype}")
                 print(f"{name} archived in vault successfully.")
 
-                if get_confirm(f"Do you want to delete the original {name} from forge? (y/N): "):
-                    shutil.rmtree(f"ideas/forge/{name}")
-                    logger.info(f"Remove Folder: ideas/forge/{name}")
+                if get_confirm(f"Do you want to delete the original {name} from {pathfrom}? (y/N): "):
+                    shutil.rmtree(f"{pathfrom}/{name}")
+                    logger.info(f"Remove Folder: {pathfrom}/{name}")
                 else:
                     print(f"{name} retained in forge.")
-                    logger.info(f"Retain Folder: ideas/forge/{name}")
+                    logger.info(f"Retain Folder: {pathfrom}/{name}")
 
             except Exception as e:
                 print(f"ERROR: {e}")
-                logger.exception(f"Fail Archive: ideas/forge/{name}")
+                logger.exception(f"Fail Archive: {pathfrom}/{name}")
         else:
             print(f"{name} does not exist in forge.")
-            logger.warning(f"Skip Archive: ideas/forge/{name} - Not Exists")
+            logger.warning(f"Skip Archive: {pathfrom}/{name} - Not Exists")
 
-def promote(name: str):
-    if not os.path.exists(f"ideas/forge/{name}"):
-        if os.path.exists(f"ideas/blueprints/{name}.md"):
-            os.makedirs(f"ideas/forge/{name}")
-            logger.info(f"Created Folder: ideas/forge/{name}")
-            shutil.move(f"ideas/blueprints/{name}.md", f"ideas/forge/{name}/README.md")
-            logger.info(f"Promote File: ideas/blueprints/{name}.md to ideas/forge/{name}/README.md")
+def promote(name: str, pathfrom: str):
+    if not os.path.exists(f"{str(FORGE_DIR)}/{name}"):
+        if os.path.exists(f"{pathfrom}/{name}.md"):
+            os.makedirs(f"{str(FORGE_DIR)}/{name}")
+            logger.info(f"Created Folder: {str(FORGE_DIR)}/{name}")
+            shutil.move(f"{pathfrom}/{name}.md", f"{str(FORGE_DIR)}/{name}/README.md")
+            logger.info(f"Promote File: {pathfrom}/{name}.md to {str(FORGE_DIR)}/{name}/README.md")
             print(f"{name} promoted from blueprints to forge.")
         else:
             print(f"{name}.md doesn't exist in blueprints. Cannot promote.")
-            logger.warning(f"Skip Promote: ideas/blueprints/{name}.md - Not Exists")
+            logger.warning(f"Skip Promote: {pathfrom}/{name}.md - Not Exists")
     else:
         print(f"{name} already exists in forge. Cannot promote.")
-        logger.warning(f"Skip Promote: ideas/forge/{name} - Already Exists")
+        logger.warning(f"Skip Promote: {str(FORGE_DIR)}/{name} - Already Exists")

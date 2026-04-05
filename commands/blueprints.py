@@ -1,7 +1,8 @@
-from core.session import get, ses
+from core.session import get
 from commands.utility import new, lst, promote
+from core.paths import BLUEPRINTS_DIR
 
-blueprintspath = "ideas/blueprints"
+blueprintsdir = str(BLUEPRINTS_DIR)
 
 
 def blueprints():
@@ -27,14 +28,14 @@ def blueprints():
 
         elif blueprint_command.lower().startswith("new "):
             fname = blueprint_command.removeprefix("new ")
-            new(fname, blueprintspath)
+            new(fname, blueprintsdir, "blueprints")
 
         elif blueprint_command.lower() == "list":
-            lst(blueprintspath)
+            lst(blueprintsdir)
 
         elif blueprint_command.lower().startswith("promote "):
             fname = blueprint_command.removeprefix("promote ")
-            promote(fname)
+            promote(fname, blueprintsdir)
 
         else:
             print("Unknown command. Type 'help' for a list of commands.")

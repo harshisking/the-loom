@@ -1,7 +1,8 @@
 from core.session import get
 from commands.utility import lst
+from core.paths import VAULT_DIR
 
-vaultpath = "ideas/vault"
+vaultdir = str(VAULT_DIR)
 
 
 def vault():
@@ -24,11 +25,11 @@ def vault():
             print(vault_help_msg)
 
         elif vault_command.lower() == "list":
-            lst(vaultpath)
+            lst(vaultdir)
         
         elif vault_command.lower().startswith("list "):
             subpath = vault_command.removeprefix("list ")
-            lst(f"{vaultpath}/{subpath}")
+            lst(f"{vaultdir}/{subpath}")
             
         else:
             print("Unknown command. Type 'help' for a list of commands.")
