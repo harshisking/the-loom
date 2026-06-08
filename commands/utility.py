@@ -3,6 +3,7 @@ import shutil
 import logging
 from core.session import get_confirm
 from core.paths import LOG_FILE, VAULT_DIR, FORGE_DIR
+from pathlib import Path
 
 logging.basicConfig(
     filename=str(LOG_FILE),
@@ -66,7 +67,7 @@ def archive(name: str, filetype: str, pathfrom: str):
                 logger.info(f"Archive Folder: {pathfrom}/{name} to {str(VAULT_DIR)}/{name}.{filetype}")
                 print(f"{name} archived in vault successfully.")
 
-                if get_confirm(f"Do you want to delete the original {name} from {pathfrom}? (y/N): "):
+                if get_confirm(f"Do you want to delete the original {name} from {pathfrom}?"):
                     shutil.rmtree(f"{pathfrom}/{name}")
                     logger.info(f"Remove Folder: {pathfrom}/{name}")
                 else:
@@ -94,3 +95,40 @@ def promote(name: str, pathfrom: str):
     else:
         print(f"{name} already exists in forge. Cannot promote.")
         logger.warning(f"Skip Promote: {str(FORGE_DIR)}/{name} - Already Exists")
+
+
+def reopen(name:str):
+    file = find_compr_file(name,str(VAULT_DIR))
+
+    if file is None:
+        print(f"{name} does not exists in vault. cannot reopen")
+        logger.warning(f"Skip Reopen: {str(VAULT_DIR)}/{name} - Not Exists")
+        
+    else:
+        if os.path.exists(f"{str(FORGE_DIR)}/{file[0]}"):
+            print(f"{file[0]} already exits in forge. cannot reopen")
+            logger.warning(f"Skip Reopen: {str(FORGE_DIR)}/{file[0]} - Already Exists")
+        else:
+            shutil.unpack_archive(f"{file[1]}",f"{str(FORGE_DIR)}/{file[0]}")
+            print(f"{file[0]} extracted successfully in forge")
+            logger.info(f"Reopen Project: {str(VAULT_DIR)}/{file[1]} to {str(FORGE_DIR)}/{file[0]}")
+
+            if get_confirm(f"Do you want to delete the archive {file[0]}"):
+                os.remove(file[1])
+                logger.info(f"Remove Archive: {file[1]}")
+            else:
+                print("Archive retained in vault")
+                logger.info(f"Retain Archive: {file[1]}")
+
+
+def find_compr_file(basename:str, directory:str):
+    if os.path.exists(f"{directory}/{basename}"):
+        path = f"{directory}/{basename}"
+        result = (str(Path(path).stem).removeprefix(f"{directory}/"),path)
+        return result
+    
+    for file in Path(directory).iterdir():
+        if file.stem==basename:
+            return (basename,str(file))
+        
+    return None
