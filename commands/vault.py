@@ -1,5 +1,5 @@
 from core.session import get
-from commands.utility import lst
+from commands.utility import lst, reopen
 from core.paths import VAULT_DIR
 
 vaultdir = str(VAULT_DIR)
@@ -30,6 +30,10 @@ def vault():
         elif vault_command.lower().startswith("list "):
             subpath = vault_command.removeprefix("list ")
             lst(f"{vaultdir}/{subpath}")
+            
+        elif vault_command.lower().startswith("reopen"):
+            name = vault_command.removeprefix("reopen").strip()
+            reopen(name)
             
         else:
             print("Unknown command. Type 'help' for a list of commands.")
